@@ -1,6 +1,5 @@
-import { Kernel } from "./kernel.js";
-import { CacheService } from "app/cache/CacheService.js";
-import { Logging } from "app/logs";
+import { CacheService } from "../cache/CacheService.js";
+import { Logging } from "../logs/index.js";
 ;
 
 
@@ -10,6 +9,6 @@ export class Engine {
     constructor(){
         Logging.log("Initializing App Engine Cache/Kernel Services ");
         new CacheService()
-        Kernel.prototype.InitiaitePaytmInstance();
+        
     }
 }

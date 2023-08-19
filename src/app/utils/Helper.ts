@@ -3,7 +3,6 @@ import moment from "moment";
 export let Tokens = new Map();
 export let BlacklistedTokens: string[] = [];
 class Helpers {
-
     /**
      * Generates a token of random bytes with the specified byte length.
      *
@@ -48,10 +47,10 @@ class Helpers {
      *  
      * @return {number} The converted number.
      */
-    CreateOTP(min:number=100000, max:number=999999): number {
-        return  Math.floor(
+    CreateOTP(min: number = 100000, max: number = 999999): number {
+        return Math.floor(
             Math.random() * (max - min + 1) + min
-          )
+        )
 
     }
     /**

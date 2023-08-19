@@ -1,27 +1,33 @@
-import { Routes } from 'app/lib/RoutesHandler';
-import { Response, Request, Router } from 'express'
-import { AirResponse } from "app/lib/Response";
-import { HttpException } from 'app/lib/ExceptionHandler';
 
-export class AppRoutes extends Routes {
+import { Response, Request, Router } from 'express'
+import { HttpException } from '../app/lib/ExceptionHandler.js';
+
+export class AppRoutes {
     constructor(public router: Router = Router()) {
-        super(router)
         this.router = router
-        this.PublicRoutes();
-        // this.ProtectedRoutes();
+        this.PublicRoutes();      
         this.UnhandledRoutes();
     }
 
 
+    /**
+     * Defines the public routes for the API.
+     *
+     * @private
+     * @returns {void}
+     */
     private PublicRoutes(): void {
         this.router.get("/test", (req: Request, res: Response) => {
-          res.json({ok:"REport"})
+            res.json({ ok: "REport" })
         })
-    }
-    protected ProtectedRoutes() {
-
-    }
+    }    
+    
+    /**
+     * Handles unhandled routes by throwing a HttpException.     *
+      
+     * @return {void} 
+     */
     private UnhandledRoutes(): void {
-        this.router.use("*", (req, res) => { throw new HttpException({ message: "Route Error", stack: "Route Not Found" }) })
+        this.router.use("*", () => { throw new HttpException({ name: "NOT_FOUND", message: "Route Error", stack: "Route Not Found" }) })
     }
 }

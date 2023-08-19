@@ -1,9 +1,12 @@
 import path from 'path';
 import winston from 'winston'
 import { yellow } from "colorette"
-import { LoggingLevel, LoggingOptions } from 'types';
+import { LoggingLevel, LoggingOptions } from '../../types/index.js';
 import { createLogger, format, transports } from 'winston'
+import {fileURLToPath} from 'url'
 const { combine, timestamp, label, printf, colorize } = format;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const LogsPath = path.join(__dirname)
 
 const Colors: Record<LoggingLevel, string> = {
@@ -31,7 +34,6 @@ export class Logging {
       },
       console: {
         level: "debug",
-
         handleExceptions: true,
         json: false,
         colorize: true,
@@ -44,7 +46,7 @@ export class Logging {
       format: combine(
         // colorize({ all: true, level: true, message: true, colors: Colors }),
         timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-        printf((info) => `[AirAPI] ${info.level.toUpperCase()} ${info.timestamp} - ${info.message}`)
+        printf((info) => `[Book Directory API] ${info.level.toUpperCase()} ${info.timestamp} - ${info.message}`)
       ),
       levels: winston.config.syslog.levels,
       transports: [
@@ -58,9 +60,7 @@ export class Logging {
       rejectionHandlers: [
         new transports.File({ filename: `${LogsPath}/rejection.log` }),
       ],
-      exceptionHandlers: [
-        new transports.File({ filename: `${LogsPath}/error.log` }),
-      ],
+       
       exitOnError: false,
     });
   }

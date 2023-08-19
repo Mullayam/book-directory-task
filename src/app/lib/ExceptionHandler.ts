@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
-import { HttpExceptionParams, HttpStatusCodes } from 'types/index.js';
-import { Logging } from 'app/logs/index.js';
+import { HttpExceptionParams, HttpStatusCodes } from '../../types/index.js';
+import { Logging } from '../logs/index.js';
 export class HttpException {
     constructor({ name, message, stack }: HttpExceptionParams) {
         this.ThrowNewException({ name, message, stack })

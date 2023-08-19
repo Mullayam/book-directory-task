@@ -1,12 +1,10 @@
-import url from 'url'
-import path from 'path';
 import cors from 'cors';
 import { blue } from "colorette"
 import bodyParser from "body-parser";
-import express, { Application, NextFunction } from 'express'
-import { Logging } from './logs';
-import { AppRoutes } from 'routes/web';
-import { HttpException } from './lib/ExceptionHandler';
+import express, { Application } from 'express'
+import { Logging } from './logs/index.js';
+import { AppRoutes } from '../routes/web.js';
+import { HttpException } from './lib/ExceptionHandler.js';
 
 
 export class AppServer {

@@ -1,4 +1,4 @@
-import { Logging } from "app/logs/index.js";
+import { Logging } from "../logs/index.js";
 import redis, { RedisClientType } from "redis";
  
 
