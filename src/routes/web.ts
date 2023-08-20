@@ -17,10 +17,11 @@ export class AppRoutes {
     private PublicRoutes(): void {
         /** Books Routes */
         this.router.get("/test",BaseController.Index )
-        this.router.get("/get-all-books",BaseController.GellAllBooks)
-        this.router.get("/book/:name",BaseController.SearchBookByName)
+        // this.router.get("/get-books/",BaseController.GellAllBooksInDirectory)
+        this.router.get("/get-all-books/:dirId?",BaseController.GellAllBooks)
+        this.router.get("/search/book",BaseController.SearchBookByName)
         this.router.post("/add-new-book",BaseController.AddBook)
-        this.router.delete("/delete/:slug",BaseController.DeleteBook)
+        this.router.delete("/delete/:id",BaseController.DeleteBook)
 
         /** Directories Routes */
         this.router.get("/list-only-directories",Directory.GetAllDirectories)
