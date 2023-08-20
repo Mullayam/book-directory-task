@@ -5,7 +5,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc",   
+    "build": "tsc",
     "start": "nodemon"
   },
   "keywords": [
@@ -16,6 +16,7 @@
   "author": "ENJOYS",
   "license": "MIT",
   "dependencies": {
+    "@vinejs/vine": "^1.6.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "colorette": "^2.0.20",
@@ -26,7 +27,9 @@
     "moment": "^2.29.4",
     "mysql2": "^3.6.0",
     "redis": "^4.6.7",
+    "reflect-metadata": "^0.1.13",
     "sequelize": "^6.32.1",
+    "sequelize-typescript": "^2.1.5",
     "typescript": "^5.1.6",
     "validator": "^13.11.0"
   },

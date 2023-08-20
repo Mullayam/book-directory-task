@@ -1,35 +1,20 @@
-import { Model, DataTypes } from 'sequelize'
-import Config from '../index.js'
-import { BooksEntity } from './books.js'
 
-type BookModelAttributes = {
-    id: string,
-    dirName: string,
-    createdAt: string,
-    status: string,
+import { Table, Column, Model, HasMany, PrimaryKey,AutoIncrement } from 'sequelize-typescript';
+import { Books } from './books.js'
+@Table({ timestamps: false ,tableName:'directories'})
+export class Directory extends Model {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
+  id!: number;
 
-};
-export class DirctoryEntity extends Model<BookModelAttributes> implements BookModelAttributes {
-    id!: string;
-    dirName!: string;
+  @Column({unique:true})
+  dirName!: string;
 
-    createdAt!: string;
-    status!: string;
-    static associate(models: any) {
-        DirctoryEntity.hasMany(BooksEntity)
-    }
+  @Column
+  status!: boolean; 
+
+  @HasMany(() => Books)
+  books!: Books[];
+
 }
-
-DirctoryEntity.init({
-    id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
-    },
-    dirName: { type: DataTypes.STRING, unique: true },
-    createdAt: { type: DataTypes.DATEONLY },
-    status: { type: DataTypes.BOOLEAN },
-}, {
-    sequelize:Config.getConnection(),
-    modelName: 'directories',
-})

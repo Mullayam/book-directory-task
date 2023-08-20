@@ -1,45 +1,3 @@
-import { JwtPayload } from "jsonwebtoken";
-
-interface UserInfoJwtPayload {
-    id?: string,
-    email?: string,
-    role?: string,
-    status?: string,
-}
-export interface LoginResponse {
-    Token: string
-    RefreshToken: string
-}
-export interface MailOptionsInterface {
-    from?: string;
-    to: string | string[];
-    cc?: string | string[];
-    bcc?: string | string[];
-    subject: string;
-    text?: string;
-    html: string;
-}
-export interface IUser {
-    firstName: string;
-    lastName: string;
-    gender: string;
-    dateOfBirth: Date;
-    residence: string;
-    avatar: string;
-    email: string;
-    password: string;
-    role: IRole;
-    isEmailVerified: boolean;
-    isProfileCompleted: boolean;
-}
-type IRole = {}
-export type IResponse<Res> = {
-    message: string;
-    data: {
-
-    };
-};
-
 export type LoggingLevel = "emerg" | "alert" | "crit" | "error" | "notice" | "info" | "debug"
 export type LoggingOptions = {
     file: {
@@ -109,17 +67,4 @@ export type HttpStatusCodes = {
     "BAD_GATEWAY": 502,
     "SERVICE_UNAVAILABLE": 503,
     "GATEWAY_TIMEOUT": 504,
-}
-export interface AuthProviders {
-    [key: AuthProvidersList]: AuthProvidersKeys
-}
-export interface AuthProvidersScopes {
-    [key: AuthProvidersList]: string[];
-
-}
-export interface AuthProvidersKeys {
-    clientID: string;
-    clientSecret: string;
-    callbackURL: string;
-};
-export type AuthProvidersList = "google" | "facebook" | "github"
+} 

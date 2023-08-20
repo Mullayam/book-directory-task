@@ -1,38 +1,27 @@
-import { Model, DataTypes, Optional } from 'sequelize'
-import Config from '../index.js'
-import { DirctoryEntity } from './directory.js'
+import { Table, Column, Model, BelongsTo, ForeignKey, PrimaryKey,AutoIncrement } from 'sequelize-typescript';
 
-type BookModelAttributes = {
-    id: string,
-    bookName: string,
-    directoryId: string,
+import { Directory } from './directory.js'
 
-};
-export class BooksEntity extends Model<BookModelAttributes> implements BookModelAttributes {
-    declare id: string;
-    declare bookName: string;
-    declare directoryId: string;
-    static associate(models: any) {
-        BooksEntity.belongsTo(DirctoryEntity)
-    }
+@Table({ timestamps: false, tableName: 'books' })
+
+export class Books extends Model {
+
+    @PrimaryKey
+    @AutoIncrement
+    @Column
+    id!: number;
+
+    @Column
+    bookName!: string;
+
+    @Column({ unique: true })
+    slug!: string;
+
+    @ForeignKey(() => Directory,)
+    @Column
+    directoryId!: number;
+
+    @BelongsTo(() => Directory)
+    dirId!: Directory;
 }
-
-BooksEntity.init({
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    bookName: { type: DataTypes.INTEGER },
-    directoryId: {
-        type: DataTypes.UUID, references: {
-            model: DirctoryEntity,
-            key: 'id'
-        }
-    },
-
-}, {
-    sequelize: Config.getConnection(),
-    modelName: 'books',
-})
 

@@ -1,6 +1,6 @@
 import { AppServer } from "./app/bootstrap.js";
 import { Logging } from "./app/logs/index.js";
-import Config from "./factory/index.js";
+import {Config} from "./factory/index.js";
 
 export class Kernel extends AppServer {
 
