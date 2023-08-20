@@ -3,7 +3,7 @@ import winston from 'winston'
 import { yellow } from "colorette"
 import { LoggingLevel, LoggingOptions } from '../../types/index.js';
 import { createLogger, format, transports } from 'winston'
-import {fileURLToPath} from 'url'
+import { fileURLToPath } from 'url'
 const { combine, timestamp, label, printf, colorize } = format;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,17 +50,20 @@ export class Logging {
       ),
       levels: winston.config.syslog.levels,
       transports: [
-        new transports.File({
-          filename: `${LogsPath}/error.log`,
-          level: level,
-        }),
+        // new transports.File({
+        //   filename: `${LogsPath}/error.log`,
+        //   level: level,
+        // }),
         new transports.File(this.LoggingOptions().file),
         new transports.Console(this.LoggingOptions().console),
       ],
       rejectionHandlers: [
         new transports.File({ filename: `${LogsPath}/rejection.log` }),
       ],
-       
+      exceptionHandlers: [
+        new transports.File({ filename: `${LogsPath}/error.log` }),
+      ],
+
       exitOnError: false,
     });
   }

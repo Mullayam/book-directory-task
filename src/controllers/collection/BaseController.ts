@@ -78,7 +78,6 @@ export class BaseController {
      */
     async GellAllBooks(req: Request, res: Response): Promise<Response<Record<string, any>>> {
         try {
-
             if (req.params.dirId) {
                 const BookList = await Books.findAll({ where: { directoryId: req.params.dirId }, attributes: ["id", "bookName"], order: ['bookName'], include: { model: Directory, attributes: ['dirName'] } })
                 return res.json({ message: "GellAllBooks", BookList })
