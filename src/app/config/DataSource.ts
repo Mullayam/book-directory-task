@@ -1,5 +1,15 @@
-import {Books, Directory} from '../../factory/models/index.js'
+import { Sequelize, Dialect } from "sequelize";
 class DataSource {
+     /**
+     * Creates and returns a new Sequelize instance using the provided sequelizeOptions.
+     *
+     * @returns {Sequelize} A new Sequelize instance.
+     */
+     public sequelize(): Sequelize {
+        const connection = new Sequelize(this.sequelizeOptions())        
+        connection.sync()
+        return connection;
+    }
      /**
      * Returns the Sequelize options for connecting to the database.
      *
@@ -12,7 +22,7 @@ class DataSource {
             username: process.env.DB_USER as string,
             password: process.env.DB_PASSWORD as string,
             database: process.env.DB_NAME as string,
-            models: [Books,Directory]
+          
             
         }
 

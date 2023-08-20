@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { Books } from '../../factory/models/books.js'
 import Helper from '../../app/utils/Helper.js'
 import { Directory } from '../../factory/models/directory.js'
-
+// import {BooksEntity} from '../../factory/models/schema.js'
 type BookBody = {
     bookName: string
     dir_id: number

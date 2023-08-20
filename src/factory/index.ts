@@ -1,7 +1,8 @@
 import { Sequelize } from 'sequelize-typescript'
 import DataSource from '../app/config/DataSource.js'
+import { Books, Directory } from '../factory/models/index.js'
 
-export class Config {
+class Config {
     static sequelize: Sequelize
 
     constructor() {
@@ -13,7 +14,7 @@ export class Config {
      * Creates a new database connection using the provided configuration.   
      */
     private CreateConnection() {
-        Config.sequelize = new Sequelize(DataSource.sequelizeOptions())
+        Config.sequelize = new Sequelize({ ...DataSource.sequelizeOptions(), models: [Books, Directory] })
     }
     /**
      * Prepares the connection to the database.
@@ -22,7 +23,6 @@ export class Config {
      */
     private async PrepareConnection(): Promise<void> {
         await Config.sequelize.authenticate().then(() => {
-
             this.Syncronization()
             console.log('Connection has been established successfully.')
 
@@ -37,9 +37,13 @@ export class Config {
     
      * @return {void} No return value.
      */
+    public static instance(): Sequelize {
+        return Config.sequelize
+    }
     static CloseConnection(): void {
         Config.sequelize.close()
     }
 
 
 }
+export default Config

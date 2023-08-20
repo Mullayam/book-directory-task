@@ -1,7 +1,7 @@
 import { AppServer } from "./app/bootstrap.js";
 import { Logging } from "./app/logs/index.js";
-import {Config} from "./factory/index.js";
-
+import Config from "./factory/index.js";
+import   './factory/models/schema.js';
 export class Kernel extends AppServer {
 
     constructor() {
@@ -14,8 +14,8 @@ export class Kernel extends AppServer {
      * @private
      */
     private LoadInstances() {
-        Logging.log("Preparing Instance To Launch")
-        new Config()
+        Logging.log("Preparing Instance To Launch")       
+        // new Config()
     }
 
     InitailizeApplication() {
