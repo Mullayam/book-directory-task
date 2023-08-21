@@ -1,4 +1,4 @@
-import { Sequelize, Dialect } from "sequelize";
+import { Sequelize } from "sequelize";
 class DataSource {
     /**
     * Creates and returns a new Sequelize instance using the provided sequelizeOptions.

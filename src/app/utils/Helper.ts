@@ -1,7 +1,7 @@
 import vine from '@vinejs/vine'
 
 class Helpers {
-
+    
 
     /**
      * Cleans and purifies a string by converting it to lowercase, removing leading and trailing whitespace,
@@ -18,7 +18,7 @@ class Helpers {
             .trim()
             .replace(/[^\w\s-]/g, "")
             .replace(/[\s_-]+/g, "-")
-            .replace(/^-+|-+$/g, "");
+            .replace(/^-+|-+$/g, "")
 
     }
     /**

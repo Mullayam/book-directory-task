@@ -1,23 +1,11 @@
 import { AppServer } from "./app/bootstrap.js";
 import { Logging } from "./app/logs/index.js";
-import Config from "./factory/index.js";
-import   './factory/models/schema.js';
+import './factory/models/schema.js';
 export class Kernel extends AppServer {
 
     constructor() {
-        super(7134);
-        this.LoadInstances()
-    }
-    /**
-     * Loads instances and prepares them for launch.
-     *
-     * @private
-     */
-    private LoadInstances() {
-        Logging.log("Preparing Instance To Launch")       
-        // new Config()
-    }
-
+        super(7134);       
+    }  
     InitailizeApplication() {
         Logging.info("InitailizeApplication")
         AppServer.RunApplication()

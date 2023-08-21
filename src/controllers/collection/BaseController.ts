@@ -1,11 +1,10 @@
 import { Request, Response } from 'express'
-import { Books } from '../../factory/models/books.js'
+import { BooksEntity as Books, DirctoryEntity as Directory } from '../../factory/models/schema.js'
 import Helper from '../../app/utils/Helper.js'
-import { Directory } from '../../factory/models/directory.js'
-// import {BooksEntity} from '../../factory/models/schema.js'
+
 type BookBody = {
     bookName: string
-    dir_id: number
+    dirName: string
 }
 
 export class BaseController {
@@ -41,11 +40,12 @@ export class BaseController {
      */
     async AddBook(req: Request, res: Response): Promise<Response<Record<string, any>>> {
         try {
-            const { bookName } = req.body as BookBody
+            const { bookName,dirName } = req.body as BookBody
             if (!bookName) throw new Error("BookName field is required")
             const createSlug = Helper.Slugify(bookName)
-            const { id } = await Directory.findOne({ where: { dirName: bookName.charAt(0) } }) as Directory
-            const AddNewBook = await Books.create({ bookName, slug: createSlug, directoryId: id })
+            const getDir = await Directory.findOne({ where: { dirName: dirName.toLowerCase() } }) as Directory
+            if (!getDir) throw new Error("No Directory Found, Please Create First")
+            const AddNewBook = await Books.create({ bookName: bookName.trim(), slug: createSlug, directoryId: getDir.id })
             return res.json({ message: "New Book Added", Book: AddNewBook })
         } catch (error: any) {
             return res.json({ success: false, message: "Something Went Wrong", error: error.message })
@@ -79,26 +79,18 @@ export class BaseController {
     async GellAllBooks(req: Request, res: Response): Promise<Response<Record<string, any>>> {
         try {
             if (req.params.dirId) {
-                const BookList = await Books.findAll({ where: { directoryId: req.params.dirId }, attributes: ["id", "bookName"], order: ['bookName'], include: { model: Directory, attributes: ['dirName'] } })
+                const BookList = await Books.findAll({ where: { directoryId: req.params.dirId }, attributes: ["id", "bookName"], order: ['bookName'] })
                 return res.json({ message: "GellAllBooks", BookList })
             }
             const BookList = await Books.findAll({ attributes: ["id", "bookName"] })
+            if (BookList.length === 0) {
+                return res.json({ message: "No Books Found", BookList })
+            }
             return res.json({ message: "GellAllBooks", BookList })
         } catch (error: any) {
             return res.json({ success: false, message: "Something Went Wrong", error: error.message })
         }
-    }
-    async GellAllBooksInDirectory(req: Request, res: Response): Promise<Response<Record<string, any>>> {
-        try {
-            const dirId = req.params.dirId
-            const BookList = await Books.findAll({ where: { directoryId: dirId }, attributes: ["id", "bookName"], order: ['bookName'], include: { model: Directory, attributes: ['dirName'] } })
-            return res.json({ message: "GellAllBooks", BookList })
-        } catch (error: any) {
-            return res.json({ success: false, message: "Something Went Wrong", error: error.message })
-        }
-    }
-
-
+    } 
 
 }
 export default new BaseController()

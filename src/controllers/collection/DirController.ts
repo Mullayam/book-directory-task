@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import vine from '@vinejs/vine'
-import { Directory } from '../../factory/models/directory.js'
+import { BooksEntity as Books, DirctoryEntity as Directory } from '../../factory/models/schema.js'
 import Helper from '../../app/utils/Helper.js'
-import { Books } from '../../factory/models/books.js'
+ 
 
 class DirectoryController {
     /**
@@ -29,7 +29,7 @@ class DirectoryController {
      */
     async GetAllDirectoriesWithBooks(req: Request, res: Response): Promise<Response<Record<string, any>>> {
         try {
-            const DirArray = await Directory.findAll({ include: [{ model: Books }] })
+            const DirArray = await Directory.findAll({ include: [{ model: Books ,attributes: ["id", "bookName"]}] })
             return res.json({ success: true, message: "List Of Directories", DirArray })
         } catch (error: any) {
             return res.json({ success: false, message: "Something Went Wrong", error: error.message })
